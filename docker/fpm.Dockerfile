@@ -12,10 +12,6 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install bcmath pcntl curl pdo_mysql zip sockets
 
-ENV PHPREDIS_VERSION 3.0.0
-ENV MONGODB_VERSION 1.11.0
-ENV MCRYPT_VERSION 1.0.3
-
 WORKDIR /var/www/html
 RUN wget -q https://getcomposer.org/download/latest-2.x/composer.phar -O composer.phar
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -29,6 +25,5 @@ RUN echo "post_max_size=100M;" >> /usr/local/etc/php/conf.d/php.ini
 
 COPY . /var/www/html
 
-#RUN mv .env.example .env &&
 RUN php composer.phar dump-autoload
 
