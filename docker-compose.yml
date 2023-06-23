@@ -34,12 +34,19 @@ services:
   front-fpm:
     build: 
       dockerfile: docker/fpm.Dockerfile
+    environment:
+      APP_KEY: base64:vsG5tzYE3A/hODsbPwk2I1lxj+DpT6G+nvDdl/K/9XE=
 
   generator:
     build: 
       dockerfile: docker/fpm.Dockerfile
-    command: 'generate 100000 20'
+    environment:
+      APP_KEY: base64:vsG5tzYE3A/hODsbPwk2I1lxj+DpT6G+nvDdl/K/9XE=
+    command: 'php artisan work:generate 100000 20'
+
   consumer:
     build: 
       dockerfile: docker/fpm.Dockerfile
-    command: 'consume'
+    environment:
+      APP_KEY: base64:vsG5tzYE3A/hODsbPwk2I1lxj+DpT6G+nvDdl/K/9XE=
+    command: 'php artisan work:consumer'

@@ -4,7 +4,7 @@
 Для работы необходим установленный docker, docker-compose.  
 Для сборки и запуска используйте команду
 ```
-docker-compose build && docker-compose up -d && docker-compose exec front-fpm php artisan key:generate
+docker-compose build && docker-compose up -d
 ```
 
 После запуска фронт можно открыть по ссылке (http://127.0.0.1:8080), RabbitMQ (http://127.0.0.1:15672) (логин/пароль rmuser/rmpassword)  
