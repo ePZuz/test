@@ -25,5 +25,10 @@ RUN echo "post_max_size=100M;" >> /usr/local/etc/php/conf.d/php.ini
 
 COPY . /var/www/html
 
-RUN php composer.phar dump-autoload
+RUN mv .env.example .env && php composer.phar dump-autoload
+
+# RUN php artisan key:generate
+RUN chmod -R a+w storage
+
+
 
