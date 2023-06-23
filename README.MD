@@ -7,7 +7,7 @@
 docker-compose build && docker-compose up -d
 ```
 
-После запуска фронт можно открыть по ссылке [http://127.0.0.1:8080], RabbitMQ [http://127.0.0.1:15672] (rmuser/rmpassword)  
+После запуска фронт можно открыть по ссылке (http://127.0.0.1:8080), RabbitMQ (http://127.0.0.1:15672) (логин/пароль rmuser/rmpassword)  
 В консоль кликхауса можно попасть командой
 ```
 docker-compose exec clickhouse clickhouse-client
