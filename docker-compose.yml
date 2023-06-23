@@ -1,0 +1,45 @@
+version: "2.4"
+services:
+  clickhouse:
+    image: yandex/clickhouse-server:21.7.4.18
+    hostname: clickhouse
+    restart: always
+    volumes:
+      - ./clickhouse:/var/lib/clickhouse
+    ports:
+      - 9000:9000
+      - 8125:8123
+
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: rmuser
+      RABBITMQ_DEFAULT_PASS: rmpassword
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports: 
+      - 15672:15672
+      - 5672:5672
+
+  front-nginx:
+    build: 
+      dockerfile: docker/nginx.Dockerfile
+    links:
+      - front-fpm:app
+    ports: 
+      - 8080:80
+
+  front-fpm:
+    build: 
+      dockerfile: docker/fpm.Dockerfile
+
+  generator:
+    build: 
+      dockerfile: docker/fpm.Dockerfile
+    command: 'generate 100000'
+  consumer:
+    build: 
+      dockerfile: docker/fpm.Dockerfile
+    command: 'consume'
