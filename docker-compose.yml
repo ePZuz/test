@@ -38,7 +38,7 @@ services:
   generator:
     build: 
       dockerfile: docker/fpm.Dockerfile
-    command: 'generate 100000'
+    command: 'generate 100000 20'
   consumer:
     build: 
       dockerfile: docker/fpm.Dockerfile
