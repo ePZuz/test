@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group([
+    'prefix' => 'metrics',
+    'as' => 'metrics.'
+], function () {
+    Route::post('/get', [\App\Http\Controllers\MetricController::class, '__invoke'])->name('index');
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
