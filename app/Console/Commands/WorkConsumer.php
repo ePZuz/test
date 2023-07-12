@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Domains\Metric\Actions\InsertMetricAction;
 use App\Domains\Metric\Helpers\MetricRabbitHelper;
 use App\Domains\Metric\Models\Metric;
 use App\Services\RabbitMQService;
@@ -49,16 +50,7 @@ class WorkConsumer extends Command
     protected function handleProcess(AMQPMessage $message)
     {
         $json = json_decode($message->getBody(), true);
-        $metrics = [];
-        foreach ($json['data'] as $sensor) {
-            $metrics[] = [
-                'device' => $json['device'],
-                'datetime' => $json['datetime'],
-                'sensor' => $sensor['sensor'],
-                'temperature' => $sensor['temp'],
-            ];
-        }
-        Metric::insertAssoc($metrics);
+        (new InsertMetricAction())->handle($json);
     }
 
 
