@@ -49,12 +49,16 @@ class WorkConsumer extends Command
     protected function handleProcess(AMQPMessage $message)
     {
         $json = json_decode($message->getBody(), true);
-        Metric::create([
-            'device' => $json['device'],
-            'datetime' => $json['datetime'],
-            'sensor' => $json['data']['sensor'],
-            'temperature' => $json['data']['temp'],
-        ]);
+        $metrics = [];
+        foreach ($json['data'] as $sensor) {
+            $metrics[] = [
+                'device' => $json['device'],
+                'datetime' => $json['datetime'],
+                'sensor' => $sensor['sensor'],
+                'temperature' => $sensor['temp'],
+            ];
+        }
+        Metric::insertAssoc($metrics);
     }
 
 

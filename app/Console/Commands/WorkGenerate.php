@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Domains\Metric\Actions\GenerateMetricAction;
 use App\Domains\Metric\Helpers\MetricRabbitHelper;
 use App\Services\RabbitMQService;
 use Carbon\Carbon;
@@ -54,14 +55,7 @@ class WorkGenerate extends Command
 
     protected function generateJson(): array
     {
-        return [
-            'datetime' => Carbon::now()->format('Y-m-d H:i:s'),
-            'device' => rand(1, 100),
-            'data' => [
-                'sensor' => rand(1, 3),
-                'temp' => rand(2, 20)
-            ]
-        ];
+        return (new GenerateMetricAction())->handle();
     }
 
     protected function startSeeder(AMQPChannel $channel, int $quantity, int $delay)
